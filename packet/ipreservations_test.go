@@ -26,7 +26,7 @@ func TestIPReservationByTags(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		matched := ipReservationByTags(tt.tags, ips)
+		matched := ipReservationByAllTags(tt.tags, ips)
 		if matched != &ips[tt.match] {
 			t.Errorf("%d: match did not find index %d", i, tt.match)
 		}
