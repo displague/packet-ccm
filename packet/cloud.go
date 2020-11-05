@@ -17,12 +17,10 @@ import (
 )
 
 const (
-	packetAuthTokenEnvVar string = "PACKET_AUTH_TOKEN"
-	packetProjectIDEnvVar string = "PACKET_PROJECT_ID"
-	providerName          string = "packet"
+	providerName = "packet"
 	// ConsumerToken token for packet consumer
-	ConsumerToken         string = "packet-ccm"
-	checkLoopTimerSeconds        = 60
+	ConsumerToken         = "packet-ccm"
+	checkLoopTimerSeconds = 60
 )
 
 type nodeReconciler func(nodes []*v1.Node, mode UpdateMode) error
@@ -61,6 +59,9 @@ type cloud struct {
 	bgp *bgp
 }
 
+// assert at build that cloud implements the cloudprovider.Interface
+var _ cloudprovider.Interface = (*cloud)(nil)
+
 func newCloud(packetConfig Config, client *packngo.Client) (cloudprovider.Interface, error) {
 	i := newInstances(client, packetConfig.ProjectID)
 	return &cloud{
@@ -76,7 +77,7 @@ func newCloud(packetConfig Config, client *packngo.Client) (cloudprovider.Interf
 
 func InitializeProvider(packetConfig Config) error {
 	// set up our client and create the cloud interface
-	client := packngo.NewClientWithAuth("", packetConfig.AuthToken, nil)
+	client := packngo.NewClientWithAuth(ConsumerToken, packetConfig.AuthToken, nil)
 	client.UserAgent = fmt.Sprintf("packet-ccm/%s %s", VERSION, client.UserAgent)
 	cloud, err := newCloud(packetConfig, client)
 	if err != nil {

@@ -108,7 +108,7 @@ fmt:
 
 golangci-lint: $(LINTER)
 $(LINTER):
-	mkdir -p hacks && cd hacks && (go mod init hacks || true) && go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.27.0
+	mkdir -p hacks && cd hacks && (go mod init hacks || true) && go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.32.2
 
 golint:
 ifeq (, $(shell which golint))
@@ -117,11 +117,11 @@ endif
 
 ## Lint the files
 lint: pkgs golangci-lint
-	@$(BUILD_CMD) $(LINTER) run --disable-all --enable=golint ./ ./packet
+	@$(BUILD_CMD) $(LINTER) run ./...
 
 ## Run unittests
 test: pkgs
-	@$(BUILD_CMD) go test -short ${PKG_LIST}
+	@$(BUILD_CMD) go test -coverprofile=coverage.txt -short ${PKG_LIST}
 
 ## Vet the files
 vet: pkgs

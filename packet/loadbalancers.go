@@ -20,10 +20,6 @@ import (
 	"k8s.io/klog"
 )
 
-const (
-	bufferSize = 4096
-)
-
 type loadBalancers struct {
 	client             *packngo.Client
 	k8sclient          kubernetes.Interface

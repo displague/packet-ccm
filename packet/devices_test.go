@@ -1,6 +1,7 @@
 package packet
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"testing"
@@ -47,7 +48,7 @@ func TestNodeAddresses(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		addresses, err := inst.NodeAddresses(nil, types.NodeName(tt.name))
+		addresses, err := inst.NodeAddresses(context.TODO(), types.NodeName(tt.name))
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)
@@ -95,7 +96,7 @@ func TestNodeAddressesByProviderID(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		addresses, err := inst.NodeAddressesByProviderID(nil, tt.id)
+		addresses, err := inst.NodeAddressesByProviderID(context.TODO(), tt.id)
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)
@@ -124,7 +125,7 @@ func TestInstanceID(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		id, err := inst.InstanceID(nil, types.NodeName(tt.name))
+		id, err := inst.InstanceID(context.TODO(), types.NodeName(tt.name))
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)
@@ -153,7 +154,7 @@ func TestInstanceType(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		plan, err := inst.InstanceType(nil, types.NodeName(tt.name))
+		plan, err := inst.InstanceType(context.TODO(), types.NodeName(tt.name))
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)
@@ -184,7 +185,7 @@ func TestInstanceTypeByProviderID(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		plan, err := inst.InstanceTypeByProviderID(nil, tt.id)
+		plan, err := inst.InstanceTypeByProviderID(context.TODO(), tt.id)
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)
@@ -197,7 +198,7 @@ func TestInstanceTypeByProviderID(t *testing.T) {
 func TestAddSSHKeyToAllInstances(t *testing.T) {
 	vc, _ := testGetValidCloud(t)
 	inst, _ := vc.Instances()
-	err := inst.AddSSHKeyToAllInstances(nil, "", nil)
+	err := inst.AddSSHKeyToAllInstances(context.TODO(), "", nil)
 	if err != cloudprovider.NotImplemented {
 		t.Errorf("mismatched error: expected %v received %v", cloudprovider.NotImplemented, err)
 	}
@@ -211,7 +212,7 @@ func TestCurrentNodeName(t *testing.T) {
 		expectedError error
 		expectedName  = types.NodeName(name)
 	)
-	nn, err := inst.CurrentNodeName(nil, name)
+	nn, err := inst.CurrentNodeName(context.TODO(), name)
 	if err != expectedError {
 		t.Errorf("mismatched errors, actual %v expected %v", err, expectedError)
 	}
@@ -242,7 +243,7 @@ func TestInstanceExistsByProviderID(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		exists, err := inst.InstanceExistsByProviderID(nil, tt.id)
+		exists, err := inst.InstanceExistsByProviderID(context.TODO(), tt.id)
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)
@@ -282,7 +283,7 @@ func TestInstanceShutdownByProviderID(t *testing.T) {
 	}
 
 	for i, tt := range tests {
-		down, err := inst.InstanceShutdownByProviderID(nil, tt.id)
+		down, err := inst.InstanceShutdownByProviderID(context.TODO(), tt.id)
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)

@@ -1,6 +1,7 @@
 package packet
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"testing"
@@ -12,7 +13,7 @@ import (
 func TestGetZone(t *testing.T) {
 	vc, _ := testGetValidCloud(t)
 	zones, _ := vc.Zones()
-	zone, err := zones.GetZone(nil)
+	zone, err := zones.GetZone(context.TODO())
 	var (
 		expectedZone  = cloudprovider.Zone{}
 		expectedError = cloudprovider.NotImplemented
@@ -47,7 +48,7 @@ func TestGetZoneByProviderID(t *testing.T) {
 
 	zones, _ := vc.Zones()
 	for i, tt := range tests {
-		zone, err := zones.GetZoneByProviderID(nil, tt.providerID)
+		zone, err := zones.GetZoneByProviderID(context.TODO(), tt.providerID)
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)
@@ -62,7 +63,7 @@ func TestGetZoneByNodeName(t *testing.T) {
 	devName := testGetNewDevName()
 	facility, _ := testGetOrCreateValidRegion(validRegionName, validRegionCode, backend)
 	plan, _ := testGetOrCreateValidPlan(validPlanName, validPlanSlug, backend)
-	backend.CreateDevice(projectID, devName, plan, facility)
+	_, _ = backend.CreateDevice(projectID, devName, plan, facility)
 
 	tests := []struct {
 		name   string
@@ -76,7 +77,7 @@ func TestGetZoneByNodeName(t *testing.T) {
 
 	zones, _ := vc.Zones()
 	for i, tt := range tests {
-		zone, err := zones.GetZoneByNodeName(nil, types.NodeName(tt.name))
+		zone, err := zones.GetZoneByNodeName(context.TODO(), types.NodeName(tt.name))
 		switch {
 		case (err == nil && tt.err != nil) || (err != nil && tt.err == nil) || (err != nil && tt.err != nil && !strings.HasPrefix(err.Error(), tt.err.Error())):
 			t.Errorf("%d: mismatched errors, actual %v expected %v", i, err, tt.err)

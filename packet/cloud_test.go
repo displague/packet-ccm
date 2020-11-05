@@ -16,7 +16,6 @@ import (
 const (
 	projectID       = "abcdef-123456"
 	token           = "12345678"
-	nodeName        = "ccm-test"
 	validRegionCode = "ewr1"
 	validRegionName = "Parsippany, NJ"
 	validPlanSlug   = "hourly"
@@ -51,7 +50,7 @@ func testGetValidCloud(t *testing.T) (*cloud, *store.Memory) {
 		},
 	}
 	// ensure we have a single region
-	backend.CreateFacility(validRegionName, validRegionCode)
+	_, _ = backend.CreateFacility(validRegionName, validRegionCode)
 	ts := httptest.NewServer(fake.CreateHandler())
 
 	url, _ := url.Parse(ts.URL)

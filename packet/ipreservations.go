@@ -43,16 +43,6 @@ ips:
 	return ret
 }
 
-// ipReservationByAnyTags given a set of packngo.IPAddressReservation and a set of tags, find
-// the first reservation that has any of those tags
-func ipReservationByAnyTags(targetTags []string, ips []packngo.IPAddressReservation) *packngo.IPAddressReservation {
-	ret := ipReservationsByAnyTags(targetTags, ips)
-	if len(ret) > 0 {
-		return ret[0]
-	}
-	return nil
-}
-
 // ipReservationsByAnyTags given a set of packngo.IPAddressReservation and a set of tags, find
 // the reservations that have any of those tags
 func ipReservationsByAnyTags(targetTags []string, ips []packngo.IPAddressReservation) []*packngo.IPAddressReservation {

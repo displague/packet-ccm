@@ -11,11 +11,11 @@ type Config struct {
 	Facility              string  `json:"facility,omitempty"`
 	PeerASN               int     `json:"peerASN,omitempty"`
 	LocalASN              int     `json:"localASN,omitempty"`
-	AnnotationLocalASN    string  `json:"annotationLocalASN,omitEmpty"`
-	AnnotationPeerASNs    string  `json:"annotationPeerASNs,omitEmpty"`
-	AnnotationPeerIPs     string  `json:"annotationPeerIPs,omitEmpty"`
-	EIPTag                string  `json:"eipTag,omitEmpty"`
-	APIServerPort         int     `json:"apiServerPort,omitEmpty"`
+	AnnotationLocalASN    string  `json:"annotationLocalASN,omitempty"`
+	AnnotationPeerASNs    string  `json:"annotationPeerASNs,omitempty"`
+	AnnotationPeerIPs     string  `json:"annotationPeerIPs,omitempty"`
+	EIPTag                string  `json:"eipTag,omitempty"`
+	APIServerPort         int     `json:"apiServerPort,omitempty"`
 }
 
 // String converts the Config structure to a string, while masking hidden fields.

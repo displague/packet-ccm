@@ -1,7 +1,6 @@
 package packet
 
 const (
-	configMapResource         = "configmaps"
 	hostnameKey               = "kubernetes.io/hostname"
 	packetIdentifier          = "packet-ccm-auto"
 	packetTag                 = "usage=" + packetIdentifier

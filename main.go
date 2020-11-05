@@ -55,7 +55,10 @@ func main() {
 	defer logs.FlushLogs()
 
 	// parse our flags so we get the providerConfig
-	command.ParseFlags(os.Args[1:])
+	if err := command.ParseFlags(os.Args[1:]); err != nil {
+		fmt.Fprintf(os.Stderr, "flag parsing error: %v\n", err)
+		os.Exit(1)
+	}
 
 	// register the provider
 	config, err := getPacketConfig(providerConfig)
